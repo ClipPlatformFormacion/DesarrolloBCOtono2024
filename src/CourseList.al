@@ -1,5 +1,6 @@
 page 50100 "Course List"
 {
+    CaptionML = ENU = 'Courses', ESP = 'Cursos';
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
