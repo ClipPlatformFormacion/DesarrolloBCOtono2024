@@ -5,6 +5,8 @@ page 50100 "Course List"
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = Course;
+    Editable = false;
+    CardPageId = "Course Card";
 
     layout
     {
@@ -14,11 +16,8 @@ page 50100 "Course List"
             {
                 field("No."; Rec."No.") { }
                 field(Name; Rec.Name) { }
-                field("Content Description"; Rec."Content Description") { }
                 field("Duration (hours)"; Rec."Duration (hours)") { }
-                field(Price; Rec.Price) { }
                 field("Language Code"; Rec."Language Code") { }
-                field("Type (Option)"; Rec."Type (Option)") { }
                 field(Type; Rec.Type) { }
             }
         }
