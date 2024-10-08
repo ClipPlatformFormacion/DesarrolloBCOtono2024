@@ -21,5 +21,12 @@ page 50100 "Course List"
                 field(Type; Rec.Type) { }
             }
         }
+        area(FactBoxes)
+        {
+            part(CourseEditions; "Course Editions")
+            {
+                SubPageLink = "Course No." = field("No.");
+            }
+        }
     }
 }

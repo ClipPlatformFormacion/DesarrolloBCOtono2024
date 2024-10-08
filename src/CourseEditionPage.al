@@ -1,7 +1,7 @@
 page 50103 "Course Editions"
 {
     CaptionML = ENU = 'Course Editions', ESP = 'Ediciones curso';
-    PageType = List;
+    PageType = ListPart;
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = "Course Edition";
@@ -12,7 +12,10 @@ page 50103 "Course Editions"
         {
             repeater(RepeaterControl)
             {
-                field("Course No."; Rec."Course No.") { }
+                field("Course No."; Rec."Course No.")
+                {
+                    Visible = false;
+                }
                 field(Edition; Rec.Edition) { }
                 field("Start Date"; Rec."Start Date") { }
                 field("Max. Students"; Rec."Max. Students") { }
