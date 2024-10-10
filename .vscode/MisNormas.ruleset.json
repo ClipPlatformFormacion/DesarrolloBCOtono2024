@@ -10,6 +10,21 @@
             "id": "AS0051",
             "action": "None",
             "justification": "AppSource: de momento no voy al marketplace"
+        },
+        {
+            "id": "AS0092",
+            "action": "None",
+            "justification": "AppSource: de momento no voy al marketplace"
+        },
+        {
+            "id": "AS0052",
+            "action": "None",
+            "justification": "AppSource: de momento no voy al marketplace"
+        },
+        {
+            "id": "AS0084",
+            "action": "None",
+            "justification": "AppSource: de momento no voy al marketplace"
         }
     ]
 }
