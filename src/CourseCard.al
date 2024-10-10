@@ -24,6 +24,10 @@ page 50101 "Course Card"
                 field(Name; Rec.Name) { }
                 field(Type; Rec.Type) { }
             }
+            part(CourseEditions; "Course Editions")
+            {
+                SubPageLink = "Course No." = field("No.");
+            }
             group(TrainingDetails)
             {
                 CaptionML = ENU = 'Training Details', ESP = 'Detalles formativos';
