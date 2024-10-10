@@ -5,6 +5,9 @@
     "CRS.FileNamePatternPageCustomizations": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
     "CRS.ExtensionObjectNamePattern": "<BaseName>",
     "al.enableCodeAnalysis": true,
-    "al.codeAnalyzers": ["${CodeCop}"],
+    "al.codeAnalyzers": [
+        "${CodeCop}",
+        "${UICop}"
+    ],
     "al.ruleSetPath": "./.vscode/MisNormas.ruleset.json"
 }
