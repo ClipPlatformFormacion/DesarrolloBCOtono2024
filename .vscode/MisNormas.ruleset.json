@@ -5,6 +5,11 @@
             "id": "AA0218",
             "action": "None",
             "justification": "Tooltips: que no sean obligatorios"
+        },
+        {
+            "id": "AS0051",
+            "action": "None",
+            "justification": "AppSource: de momento no voy al marketplace"
         }
     ]
 }
