@@ -7,6 +7,7 @@ table 50100 Course
         field(1; "No."; Code[20])
         {
             CaptionML = ENU = 'No.', ESP = 'Nº';
+            ToolTipML = ENU = 'una ayuda', ESP = 'Número identificativo del registro';
 
             trigger OnValidate()
             var
@@ -27,6 +28,7 @@ table 50100 Course
         field(2; Name; Text[100])
         {
             CaptionML = ENU = 'Name', ESP = 'Nombre';
+            ToolTipML = ENU = 'A name', ESP = 'Nombre del curso';
         }
         field(3; "Content Description"; Text[2048])
         {
@@ -134,7 +136,7 @@ table 50100 Course
     end;
 
     var
-        NoSeries: Codeunit "No. Series";
         ResSetup: Record "Courses Setup";
         Res: Record Course;
+        NoSeries: Codeunit "No. Series";
 }

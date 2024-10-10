@@ -1,0 +1,10 @@
+{
+    "name": "Mis normas personalizadas",
+    "rules": [
+        {
+            "id": "AA0218",
+            "action": "None",
+            "justification": "Tooltips: que no sean obligatorios"
+        }
+    ]
+}

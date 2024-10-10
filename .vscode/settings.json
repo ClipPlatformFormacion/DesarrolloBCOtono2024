@@ -3,5 +3,8 @@
     "CRS.FileNamePattern": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
     "CRS.FileNamePatternExtensions": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
     "CRS.FileNamePatternPageCustomizations": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
-    "CRS.ExtensionObjectNamePattern": "<BaseName>"
+    "CRS.ExtensionObjectNamePattern": "<BaseName>",
+    "al.enableCodeAnalysis": true,
+    "al.codeAnalyzers": ["${CodeCop}"],
+    "al.ruleSetPath": "./.vscode/MisNormas.ruleset.json"
 }
