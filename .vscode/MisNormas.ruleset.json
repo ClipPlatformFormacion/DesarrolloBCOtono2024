@@ -25,6 +25,12 @@
             "id": "AS0084",
             "action": "None",
             "justification": "AppSource: de momento no voy al marketplace"
+        },
+        {
+            "id": "AS0054",
+            "action": "None",
+            "justification": "No quiero prefijos"
+        },
         }
     ]
 }

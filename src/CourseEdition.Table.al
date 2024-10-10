@@ -1,3 +1,4 @@
+namespace ClipPlatform.Course.MasterData;
 table 50102 "Course Edition"
 {
     CaptionML = ENU = 'Course Edition', ESP = 'Edición curso';

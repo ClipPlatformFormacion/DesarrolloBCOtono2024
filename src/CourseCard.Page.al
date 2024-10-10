@@ -1,3 +1,5 @@
+namespace ClipPlatform.Course.MasterData;
+
 page 50101 "Course Card"
 {
     CaptionML = ENU = 'Course Card', ESP = 'Ficha curso';

@@ -1,3 +1,7 @@
+namespace ClipPlatform.Course.Setup;
+
+using Microsoft.Foundation.NoSeries;
+
 table 50101 "Courses Setup"
 {
     CaptionML = ENU = 'Courses Setup', ESP = 'Conf. cursos';
