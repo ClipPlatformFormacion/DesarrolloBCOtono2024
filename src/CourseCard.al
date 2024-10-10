@@ -24,7 +24,7 @@ page 50101 "Course Card"
                 field(Name; Rec.Name) { }
                 field(Type; Rec.Type) { }
             }
-            part(CourseEditions; "Course Editions")
+            part(CourseEditions; "Course Editions Factbox")
             {
                 SubPageLink = "Course No." = field("No.");
             }
@@ -39,6 +39,18 @@ page 50101 "Course Card"
             {
                 CaptionML = ENU = 'Invoicing', ESP = 'Facturación';
                 field(Price; Rec.Price) { }
+            }
+        }
+    }
+    actions
+    {
+        area(Navigation)
+        {
+            action(Editions)
+            {
+                CaptionML = ENU = 'Editions', ESP = 'Ediciones';
+                RunObject = page "Course Editions";
+                RunPageLink = "Course No." = field("No.");
             }
         }
     }

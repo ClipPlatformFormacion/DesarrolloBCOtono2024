@@ -23,9 +23,21 @@ page 50100 "Course List"
         }
         area(FactBoxes)
         {
-            part(CourseEditions; "Course Editions")
+            part(CourseEditions; "Course Editions Factbox")
             {
                 SubPageLink = "Course No." = field("No.");
+            }
+        }
+    }
+    actions
+    {
+        area(Navigation)
+        {
+            action(Editions)
+            {
+                CaptionML = ENU = 'Editions', ESP = 'Ediciones';
+                RunObject = page "Course Editions";
+                RunPageLink = "Course No." = field("No.");
             }
         }
     }
