@@ -41,6 +41,8 @@ page 50101 "Course Card"
             {
                 Caption = 'Invoicing', Comment = 'ESP="Facturación"';
                 field(Price; Rec.Price) { }
+                field("Gen. Prod. Posting Group"; Rec."Gen. Prod. Posting Group") { }
+                field("VAT Prod. Posting Group"; Rec."VAT Prod. Posting Group") { }
             }
         }
     }

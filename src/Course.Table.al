@@ -3,6 +3,8 @@ namespace ClipPlatform.Course.MasterData;
 using System.Globalization;
 using Microsoft.Foundation.NoSeries;
 using ClipPlatform.Course.Setup;
+using Microsoft.Finance.VAT.Setup;
+using Microsoft.Finance.GeneralLedger.Setup;
 
 table 50100 Course
 {
@@ -70,6 +72,25 @@ table 50100 Course
             Caption = 'No. Series';
             Editable = false;
             TableRelation = "No. Series";
+        }
+        field(51; "Gen. Prod. Posting Group"; Code[20])
+        {
+            Caption = 'Gen. Prod. Posting Group', Comment = 'ESP="Grupo registro prod."';
+            TableRelation = "Gen. Product Posting Group";
+
+            trigger OnValidate()
+            var
+                GenProdPostingGrp: Record "Gen. Product Posting Group";
+            begin
+                if xRec."Gen. Prod. Posting Group" <> "Gen. Prod. Posting Group" then
+                    if GenProdPostingGrp.ValidateVatProdPostingGroup(GenProdPostingGrp, "Gen. Prod. Posting Group") then
+                        Validate("VAT Prod. Posting Group", GenProdPostingGrp."Def. VAT Prod. Posting Group");
+            end;
+        }
+        field(58; "VAT Prod. Posting Group"; Code[20])
+        {
+            Caption = 'VAT Prod. Posting Group', Comment = 'ESP="Grupo registro IVA Prod."';
+            TableRelation = "VAT Product Posting Group";
         }
     }
 
