@@ -2,7 +2,7 @@ namespace ClipPlatform.Course.MasterData;
 
 page 50101 "Course Card"
 {
-    CaptionML = ENU = 'Course Card', ESP = 'Ficha curso';
+    Caption = 'Course Card', Comment = 'ESP="Ficha curso"';
     PageType = Card;
     ApplicationArea = All;
     UsageCategory = None;
@@ -14,7 +14,7 @@ page 50101 "Course Card"
         {
             group(General)
             {
-                CaptionML = ENU = 'General', ESP = 'General';
+                Caption = 'General', Comment = 'ESP="General"';
                 field("No."; Rec."No.")
                 {
                     trigger OnAssistEdit()
@@ -32,14 +32,14 @@ page 50101 "Course Card"
             }
             group(TrainingDetails)
             {
-                CaptionML = ENU = 'Training Details', ESP = 'Detalles formativos';
+                Caption = 'Training Details', Comment = 'ESP="Detalles formativos"';
                 field("Content Description"; Rec."Content Description") { }
                 field("Duration (hours)"; Rec."Duration (hours)") { }
                 field("Language Code"; Rec."Language Code") { }
             }
             group(Invoicing)
             {
-                CaptionML = ENU = 'Invoicing', ESP = 'Facturación';
+                Caption = 'Invoicing', Comment = 'ESP="Facturación"';
                 field(Price; Rec.Price) { }
             }
         }
@@ -50,7 +50,7 @@ page 50101 "Course Card"
         {
             action(Editions)
             {
-                CaptionML = ENU = 'Editions', ESP = 'Ediciones';
+                Caption = 'Editions', Comment = 'ESP="Ediciones"';
                 RunObject = page "Course Editions";
                 RunPageLink = "Course No." = field("No.");
                 Image = ListPage;

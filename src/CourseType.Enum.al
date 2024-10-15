@@ -4,14 +4,14 @@ enum 50100 "Course Type"
 
     value(0; " ")
     {
-        CaptionML = ENU = ' ', ESP = ' ';
+        Caption = ' ', Comment = 'ESP=" "';
     }
     value(1; "Intructor-Lead")
     {
-        CaptionML = ENU = 'Instructor-Lead', ESP = 'Con profesor';
+        Caption = 'Instructor-Lead', Comment = 'ESP="Con profesor"';
     }
     value(2; "Video Tutorial")
     {
-        CaptionML = ENU = 'Video Tutorial', ESP = 'Vídeo tutorial';
+        Caption = 'Video Tutorial', Comment = 'ESP="Vídeo tutorial"';
     }
 }
