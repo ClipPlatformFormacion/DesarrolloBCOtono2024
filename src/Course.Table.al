@@ -94,6 +94,11 @@ table 50100 Course
         }
     }
 
+    fieldgroups
+    {
+        fieldgroup(DropDown; "No.", Name, Type, "Language Code") { }
+    }
+
     trigger OnInsert()
     var
         Course: Record Course;

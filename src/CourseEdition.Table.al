@@ -32,4 +32,9 @@ table 50102 "Course Edition"
             Clustered = true;
         }
     }
+
+    fieldgroups
+    {
+        fieldgroup(DropDown; Edition, "Start Date", "Max. Students") { }
+    }
 }
