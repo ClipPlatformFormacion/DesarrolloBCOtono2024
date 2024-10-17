@@ -27,4 +27,17 @@ codeunit 50100 "Course Sales Management"
     procedure OnAfterAssignResourceValues(var SalesLine: Record "Sales Line"; Res: Record Course; SalesHeader: Record "Sales Header")
     begin
     end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Option Lookup Buffer", OnBeforeIncludeOption, '', false, false)]
+    local procedure "Option Lookup Buffer_OnBeforeIncludeOption"(OptionLookupBuffer: Record "Option Lookup Buffer" temporary; LookupType: Option; Option: Integer; var Handled: Boolean; var Result: Boolean; RecRef: RecordRef)
+    begin
+        if LookupType <> Enum::"Option Lookup Type"::Sales.AsInteger() then
+            exit;
+
+        if Option <> Enum::"Sales Line Type"::Course.AsInteger() then
+            exit;
+
+        Handled := true;
+        Result := true;
+    end;
 }
