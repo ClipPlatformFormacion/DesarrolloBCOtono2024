@@ -102,9 +102,6 @@ table 50100 Course
     trigger OnInsert()
     var
         Course: Record Course;
-#if not CLEAN24        
-        NoSeriesMgt: Codeunit NoSeriesManagement;
-#endif
         IsHandled: Boolean;
     begin
         IsHandled := false;
@@ -115,22 +112,14 @@ table 50100 Course
         if "No." = '' then begin
             ResSetup.Get();
             ResSetup.TestField("Course Nos.");
-#if not CLEAN24
-            NoSeriesMgt.RaiseObsoleteOnBeforeInitSeries(ResSetup."Course Nos.", xRec."No. Series", 0D, "No.", "No. Series", IsHandled);
-            if not IsHandled then begin
-#endif
-                "No. Series" := ResSetup."Course Nos.";
-                if NoSeries.AreRelated("No. Series", xRec."No. Series") then
-                    "No. Series" := xRec."No. Series";
+            "No. Series" := ResSetup."Course Nos.";
+            if NoSeries.AreRelated("No. Series", xRec."No. Series") then
+                "No. Series" := xRec."No. Series";
+            "No." := NoSeries.GetNextNo("No. Series");
+            Course.ReadIsolation(IsolationLevel::ReadUncommitted);
+            Course.SetLoadFields("No.");
+            while Course.Get("No.") do
                 "No." := NoSeries.GetNextNo("No. Series");
-                Course.ReadIsolation(IsolationLevel::ReadUncommitted);
-                Course.SetLoadFields("No.");
-                while Course.Get("No.") do
-                    "No." := NoSeries.GetNextNo("No. Series");
-#if not CLEAN24
-                NoSeriesMgt.RaiseObsoleteOnAfterInitSeries("No. Series", ResSetup."Course Nos.", 0D, "No.");
-            end;
-#endif
         end;
     end;
 
