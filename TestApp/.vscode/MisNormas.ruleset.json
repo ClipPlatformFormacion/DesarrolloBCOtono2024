@@ -1,0 +1,35 @@
+{
+    "name": "Mis normas personalizadas",
+    "rules": [
+        {
+            "id": "AA0218",
+            "action": "None",
+            "justification": "Tooltips: que no sean obligatorios"
+        },
+        {
+            "id": "AS0051",
+            "action": "None",
+            "justification": "AppSource: de momento no voy al marketplace"
+        },
+        {
+            "id": "AS0092",
+            "action": "None",
+            "justification": "AppSource: de momento no voy al marketplace"
+        },
+        {
+            "id": "AS0052",
+            "action": "None",
+            "justification": "AppSource: de momento no voy al marketplace"
+        },
+        {
+            "id": "AS0084",
+            "action": "None",
+            "justification": "AppSource: de momento no voy al marketplace"
+        },
+        {
+            "id": "AS0054",
+            "action": "None",
+            "justification": "No quiero prefijos"
+        }
+    ]
+}
