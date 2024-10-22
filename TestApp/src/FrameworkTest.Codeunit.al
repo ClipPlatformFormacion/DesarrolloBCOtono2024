@@ -18,6 +18,7 @@ codeunit 50150 "Framework Test"
     procedure Test003()
     var
         GetMin: Codeunit "Get Min";
+        LibraryAssert: Codeunit "Library Assert";
         Value1, Value2 : Decimal;
         Result: Decimal;
     begin
@@ -31,8 +32,10 @@ codeunit 50150 "Framework Test"
         Result := Getmin.GetMin(Value1, Value2);
 
         // [Then] El resultado es el Valor1
-        if Result <> Value1 then
-            Error('el resultado no es correcto');
+        // if Result <> Value1 then
+        //     Error('el resultado no es correcto');
+
+        LibraryAssert.AreEqual(Value1, Result, 'el resultado no es correcto');
     end;
 
     [Test]
