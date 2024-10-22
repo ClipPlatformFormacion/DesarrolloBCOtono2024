@@ -4,13 +4,10 @@ codeunit 50153 "Library - Course"
     var
         GeneralPostingSetup: Record "General Posting Setup";
         VATPostingSetup: Record "VAT Posting Setup";
-        UnitOfMeasure: Record "Unit of Measure";
-        LibraryInventory: Codeunit "Library - Inventory";
         LibraryERM: Codeunit "Library - ERM";
         LibraryRandom: Codeunit "Library - Random";
     begin
         CourseNoSeriesSetup();
-        LibraryInventory.FindUnitOfMeasure(UnitOfMeasure);
         LibraryERM.FindGeneralPostingSetupInvtFull(GeneralPostingSetup);
         LibraryERM.FindVATPostingSetupInvt(VATPostingSetup);
 
