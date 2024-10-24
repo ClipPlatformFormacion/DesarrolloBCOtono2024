@@ -12,5 +12,8 @@ permissionset 50100 "Course - SUPER"
         page "Course Editions" = X,
         page "Course Editions FactBox" = X,
         page "Course List" = X,
-        page "Courses Setup" = X;
+        page "Courses Setup" = X,
+        table "Course Ledger Entry" = X,
+        tabledata "Course Ledger Entry" = RMID,
+        codeunit "Course Sales Management" = X;
 }
