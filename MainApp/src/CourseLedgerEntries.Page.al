@@ -1,7 +1,7 @@
 page 50105 "Course Ledger Entries"
 {
     ApplicationArea = All;
-    Caption = 'Resource Ledger Entries', Comment = 'ESP="Movs. cursos"';
+    Caption = 'Course Ledger Entries', Comment = 'ESP="Movs. cursos"';
     DataCaptionFields = "Course No.";
     Editable = false;
     PageType = List;
