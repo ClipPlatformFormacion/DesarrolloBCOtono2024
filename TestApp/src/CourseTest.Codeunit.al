@@ -68,4 +68,112 @@ codeunit 50152 "Course Test"
 
         LibraryAssert.AreEqual(CourseEdition.Edition, SalesShipmentLine."Course Edition", 'La edición en el albarán no es correcta');
     end;
+
+    [Test]
+    procedure CourseLedgerEntryCreation()
+    var
+        Course: Record Course;
+        CourseEdition: Record "Course Edition";
+        SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
+        CourseLedgerEntry: Record "Course Ledger Entry";
+        LibrarySales: Codeunit "Library - Sales";
+        LibraryAssert: Codeunit "Library Assert";
+        LibraryCourse: Codeunit "Library - Course";
+        DocumentNo: Code[20];
+    begin
+        // [Scenario] El proceso de registro de un documento de venta genera movimientos de curso
+
+        // [Given] Un curso con edición. Un documento de venta para el curso y edición
+        LibraryCourse.CreateCourse(Course);
+        CourseEdition := LibraryCourse.CreateEdition(Course."No.");
+
+        LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::Order, '');
+        LibrarySales.CreateSalesLineSimple(SalesLine, SalesHeader);
+        SalesLine.Validate(Type, SalesLine.Type::Course);
+        SalesLine.Validate("No.", Course."No.");
+        SalesLine.Validate("Course Edition", CourseEdition.Edition);
+        SalesLine.Validate(Quantity, 1);
+        SalesLine.Modify(true);
+
+        // [When] Registrar el documento de venta (envío)
+        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, false);
+
+        // [Then] El albarán no genera movimiento de curso
+        CourseLedgerEntry.SetRange("Document No.", DocumentNo);
+        LibraryAssert.AreEqual(0, CourseLedgerEntry.Count(), 'El registro de un albarán no debería crear movimientos de curso');
+
+        // [When] Registrar el documento de venta (factura)
+        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, false, true);
+
+        // [Then] Se ha generado un movimiento de curso
+        CourseLedgerEntry.SetRange("Document No.", DocumentNo);
+        LibraryAssert.AreEqual(1, CourseLedgerEntry.Count(), 'El número de movimientos generados por la factura es incorrecto');
+
+        CourseLedgerEntry.FindFirst();
+        LibraryAssert.AreEqual(SalesHeader."Posting Date", CourseLedgerEntry."Posting Date", 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesLine."No.", CourseLedgerEntry."Course No.", 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesLine."Course Edition", CourseLedgerEntry."Course Edition", 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesLine.Description, CourseLedgerEntry.Description, 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesLine."Qty. to Invoice", CourseLedgerEntry.Quantity, 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesLine."Unit Price", CourseLedgerEntry."Unit Price", 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesLine.Amount, CourseLedgerEntry."Total Price", 'Dato incorrecto');
+        LibraryAssert.AreEqual('', CourseLedgerEntry."Journal Batch Name", 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesHeader."Document Date", CourseLedgerEntry."Document Date", 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesHeader."External Document No.", CourseLedgerEntry."External Document No.", 'Dato incorrecto');
+    end;
+
+    [Test]
+    procedure CourseLedgerEntryCreation_CreditMemo()
+    var
+        Course: Record Course;
+        CourseEdition: Record "Course Edition";
+        SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
+        CourseLedgerEntry: Record "Course Ledger Entry";
+        LibrarySales: Codeunit "Library - Sales";
+        LibraryAssert: Codeunit "Library Assert";
+        LibraryCourse: Codeunit "Library - Course";
+        DocumentNo: Code[20];
+    begin
+        // [Scenario] El proceso de registro de un documento de venta genera movimientos de curso
+
+        // [Given] Un curso con edición. Un documento de venta para el curso y edición
+        LibraryCourse.CreateCourse(Course);
+        CourseEdition := LibraryCourse.CreateEdition(Course."No.");
+
+        LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::"Return Order", '');
+        LibrarySales.CreateSalesLineSimple(SalesLine, SalesHeader);
+        SalesLine.Validate(Type, SalesLine.Type::Course);
+        SalesLine.Validate("No.", Course."No.");
+        SalesLine.Validate("Course Edition", CourseEdition.Edition);
+        SalesLine.Validate(Quantity, 1);
+        SalesLine.Modify(true);
+
+        // [When] Registrar el documento de venta (recepción)
+        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, false);
+
+        // [Then] El albarán no genera movimiento de curso
+        CourseLedgerEntry.SetRange("Document No.", DocumentNo);
+        LibraryAssert.AreEqual(0, CourseLedgerEntry.Count(), 'El registro de un albarán no debería crear movimientos de curso');
+
+        // [When] Registrar el documento de venta (abono)
+        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, false, true);
+
+        // [Then] Se ha generado un movimiento de curso
+        CourseLedgerEntry.SetRange("Document No.", DocumentNo);
+        LibraryAssert.AreEqual(1, CourseLedgerEntry.Count(), 'El número de movimientos generados por la abono es incorrecto');
+
+        CourseLedgerEntry.FindFirst();
+        LibraryAssert.AreEqual(SalesHeader."Posting Date", CourseLedgerEntry."Posting Date", 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesLine."No.", CourseLedgerEntry."Course No.", 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesLine."Course Edition", CourseLedgerEntry."Course Edition", 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesLine.Description, CourseLedgerEntry.Description, 'Dato incorrecto');
+        LibraryAssert.AreEqual(-SalesLine."Qty. to Invoice", CourseLedgerEntry.Quantity, 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesLine."Unit Price", CourseLedgerEntry."Unit Price", 'Dato incorrecto');
+        LibraryAssert.AreEqual(-SalesLine.Amount, CourseLedgerEntry."Total Price", 'Dato incorrecto');
+        LibraryAssert.AreEqual('', CourseLedgerEntry."Journal Batch Name", 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesHeader."Document Date", CourseLedgerEntry."Document Date", 'Dato incorrecto');
+        LibraryAssert.AreEqual(SalesHeader."External Document No.", CourseLedgerEntry."External Document No.", 'Dato incorrecto');
+    end;
 }

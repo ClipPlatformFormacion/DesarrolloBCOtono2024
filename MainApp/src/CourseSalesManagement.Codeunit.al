@@ -40,4 +40,31 @@ codeunit 50100 "Course Sales Management"
         Handled := true;
         Result := true;
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnPostSalesLineOnBeforePostSalesLine, '', false, false)]
+    local procedure "Sales-Post_OnPostSalesLineOnBeforePostSalesLine"(SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; GenJnlLineDocNo: Code[20]; GenJnlLineExtDocNo: Code[35]; GenJnlLineDocType: Enum "Gen. Journal Document Type"; SrcCode: Code[10]; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; var IsHandled: Boolean; SalesLineACY: Record "Sales Line")
+    begin
+        if SalesLine.Type <> SalesLine.Type::Course then
+            exit;
+
+        PostCourseJournalLine(SalesHeader, SalesLine, GenJnlLineDocNo, GenJnlLineExtDocNo, SrcCode);
+    end;
+
+    local procedure PostCourseJournalLine(var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; GenJnlLineDocNo: Code[20]; GenJnlLineExtDocNo: Code[35]; SrcCode: Code[10])
+    var
+        CourseJournalLine: Record "Course Journal Line";
+        CourseJournalPostLine: Codeunit "Course Journal-Post Line";
+        ShouldExit: Boolean;
+    begin
+        ShouldExit := SalesLine."Qty. to Invoice" = 0;
+        if ShouldExit then
+            exit;
+
+        CourseJournalLine.Init();
+        CourseJournalLine.CopyFromSalesHeader(SalesHeader);
+        CourseJournalLine.CopyDocumentFields(GenJnlLineDocNo, GenJnlLineExtDocNo, SrcCode, SalesHeader."Posting No. Series");
+        CourseJournalLine.CopyFromSalesLine(SalesLine);
+
+        CourseJournalPostLine.RunWithCheck(CourseJournalLine);
+    end;
 }
