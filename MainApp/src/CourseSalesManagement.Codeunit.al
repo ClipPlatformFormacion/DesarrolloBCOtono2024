@@ -55,9 +55,28 @@ codeunit 50100 "Course Sales Management"
 
     local procedure CheckSalesForCourseEdition(var SalesLine: Record "Sales Line")
     var
-
+        CourseEdition: Record "Course Edition";
+        CourseLedgerEntry: Record "Course Ledger Entry";
+        PreviousSales: Decimal;
     begin
+        if SalesLine.Type <> SalesLine.Type::Course then
+            exit;
+        if (SalesLine.Quantity = 0) or (SalesLine."Course Edition" = '') then
+            exit;
 
+        CourseEdition.SetLoadFields("Max. Students");
+        CourseEdition.Get(SalesLine."No.", SalesLine."Course Edition");
+
+        CourseLedgerEntry.SetRange("Course No.", SalesLine."No.");
+        CourseLedgerEntry.SetRange("Course Edition", SalesLine."Course Edition");
+        CourseLedgerEntry.SetLoadFields(Quantity);
+        if CourseLedgerEntry.FindSet() then
+            repeat
+                PreviousSales := PreviousSales + CourseLedgerEntry.Quantity;
+            until CourseLedgerEntry.Next() = 0;
+
+        if (PreviousSales + SalesLine.Quantity) > CourseEdition."Max. Students" then
+            Message('Con la venta actual se superará el número máximo de alumnos permitos para este curso');
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnPostSalesLineOnBeforePostSalesLine, '', false, false)]
