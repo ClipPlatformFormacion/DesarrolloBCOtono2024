@@ -41,6 +41,25 @@ codeunit 50100 "Course Sales Management"
         Result := true;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnAfterValidateEvent, Quantity, false, false)]
+    local procedure SalesLine_OnAfterValidateEvent_Quantity(var Rec: Record "Sales Line")
+    begin
+        CheckSalesForCourseEdition(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnAfterValidateEvent, "Course Edition", false, false)]
+    local procedure SalesLine_OnAfterValidateEvent_CourseEdition(var Rec: Record "Sales Line")
+    begin
+        CheckSalesForCourseEdition(Rec);
+    end;
+
+    local procedure CheckSalesForCourseEdition(var SalesLine: Record "Sales Line")
+    var
+
+    begin
+
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnPostSalesLineOnBeforePostSalesLine, '', false, false)]
     local procedure "Sales-Post_OnPostSalesLineOnBeforePostSalesLine"(SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; GenJnlLineDocNo: Code[20]; GenJnlLineExtDocNo: Code[35]; GenJnlLineDocType: Enum "Gen. Journal Document Type"; SrcCode: Code[10]; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; var IsHandled: Boolean; SalesLineACY: Record "Sales Line")
     begin

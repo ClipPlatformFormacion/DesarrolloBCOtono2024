@@ -1,3 +1,4 @@
+#pragma warning disable AA0210
 codeunit 50152 "Course Test"
 {
     Subtype = Test;
@@ -176,4 +177,66 @@ codeunit 50152 "Course Test"
         LibraryAssert.AreEqual(SalesHeader."Document Date", CourseLedgerEntry."Document Date", 'Dato incorrecto');
         LibraryAssert.AreEqual(SalesHeader."External Document No.", CourseLedgerEntry."External Document No.", 'Dato incorrecto');
     end;
+
+    [Test]
+    procedure NotificationWhenExceedingMaxStudents()
+    var
+        Course: Record Course;
+        CourseEdition: Record "Course Edition";
+        SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
+        CourseLedgerEntry: Record "Course Ledger Entry";
+        LibrarySales: Codeunit "Library - Sales";
+        LibraryAssert: Codeunit "Library Assert";
+        LibraryCourse: Codeunit "Library - Course";
+        DocumentNo: Code[20];
+    begin
+        // [Scenario] Cuando con las ventas previas más el documento actual se supera el máximo de alumnos para una edición, tiene que salir una notificación
+
+        // [Setup] Unas ventas previas: un curso, una edición, registros de facturas y abonos        
+        LibraryCourse.CreateCourse(Course);
+        CourseEdition := LibraryCourse.CreateEdition(Course."No.");
+        CourseEdition."Max. Students" := 15;
+        CourseEdition.Modify();
+
+        LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::Order, '');
+        LibrarySales.CreateSalesLineSimple(SalesLine, SalesHeader);
+        SalesLine.Validate(Type, SalesLine.Type::Course);
+        SalesLine.Validate("No.", Course."No.");
+        SalesLine.Validate("Course Edition", CourseEdition.Edition);
+        SalesLine.Validate(Quantity, 10);
+        SalesLine.Modify(true);
+        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, false);
+
+        LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::Order, '');
+        LibrarySales.CreateSalesLineSimple(SalesLine, SalesHeader);
+        SalesLine.Validate(Type, SalesLine.Type::Course);
+        SalesLine.Validate("No.", Course."No.");
+        SalesLine.Validate("Course Edition", CourseEdition.Edition);
+        SalesLine.Validate(Quantity, 4);
+        SalesLine.Modify(true);
+        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, false);
+
+        LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::"Return Order", '');
+        LibrarySales.CreateSalesLineSimple(SalesLine, SalesHeader);
+        SalesLine.Validate(Type, SalesLine.Type::Course);
+        SalesLine.Validate("No.", Course."No.");
+        SalesLine.Validate("Course Edition", CourseEdition.Edition);
+        SalesLine.Validate(Quantity, 2);
+        SalesLine.Modify(true);
+        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, false);
+
+        //          Un nuevo documento de venta
+        LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::Order, '');
+        LibrarySales.CreateSalesLineSimple(SalesLine, SalesHeader);
+
+        // [When] Se seleccione la edición en el nuevo documento
+        SalesLine.Validate(Type, SalesLine.Type::Course);
+        SalesLine.Validate("No.", Course."No.");
+        SalesLine.Validate("Course Edition", CourseEdition.Edition);
+        SalesLine.Validate(Quantity, 4);
+
+        // [Then] Tiene que salir una notificación
+    end;
 }
+#pragma warning restore
