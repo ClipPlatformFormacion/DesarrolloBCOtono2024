@@ -159,6 +159,10 @@ table 50103 "Course Ledger Entry"
         {
             Clustered = true;
         }
+        // key(SK1; "Course No.", "Course Edition", "Posting Date")
+        // {
+        //     SumIndexFields = Quantity;
+        // }
     }
 
     fieldgroups

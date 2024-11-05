@@ -24,6 +24,7 @@ table 50102 "Course Edition"
             Caption = 'Max. Students', Comment = 'ESP="Nº máx. alumnos"';
             BlankZero = true;
         }
+#pragma warning disable AA0232
         field(5; "Sales (Qty.)"; Decimal)
         {
             Caption = 'Sales (Qty.)', Comment = 'ESP="Ventas (Cdad.)"';
@@ -38,6 +39,7 @@ table 50102 "Course Edition"
                                                                   )
                              );
         }
+#pragma warning restore
         field(6; "Date Filter"; Date)
         {
             Caption = 'Date Filter', comment = 'ESP="Filtro fecha"';

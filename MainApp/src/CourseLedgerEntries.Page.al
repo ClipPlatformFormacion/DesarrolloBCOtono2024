@@ -6,8 +6,10 @@ page 50105 "Course Ledger Entries"
     Editable = false;
     PageType = List;
     SourceTable = "Course Ledger Entry";
+#pragma warning disable AL0254
     SourceTableView = sorting("Course No.", "Posting Date")
                       order(descending);
+#pragma warning restore                    
     UsageCategory = History;
 
     layout
