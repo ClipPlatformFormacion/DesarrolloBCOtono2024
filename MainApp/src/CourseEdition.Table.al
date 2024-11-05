@@ -22,6 +22,16 @@ table 50102 "Course Edition"
         field(4; "Max. Students"; Integer)
         {
             Caption = 'Max. Students', Comment = 'ESP="Nº máx. alumnos"';
+            BlankZero = true;
+        }
+        field(5; "Sales (Qty.)"; Decimal)
+        {
+            Caption = 'Sales (Qty.)', Comment = 'ESP="Ventas (Cdad.)"';
+            FieldClass = FlowField;
+            DecimalPlaces = 0 : 2;
+            BlankZero = true;
+            Editable = false;
+            CalcFormula = sum("Course Ledger Entry".Quantity where("Course No." = field("Course No."), "Course Edition" = field(Edition)));
         }
     }
 
