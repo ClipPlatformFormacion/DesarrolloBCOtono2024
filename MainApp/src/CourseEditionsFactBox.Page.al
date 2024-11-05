@@ -3,7 +3,7 @@ page 50103 "Course Editions FactBox"
     Caption = 'Course Editions', Comment = 'ESP="Ediciones curso"';
     PageType = ListPart;
     ApplicationArea = All;
-    UsageCategory = Lists;
+    UsageCategory = None;
     SourceTable = "Course Edition";
 
     layout

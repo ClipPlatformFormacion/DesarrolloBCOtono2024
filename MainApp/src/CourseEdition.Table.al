@@ -31,7 +31,17 @@ table 50102 "Course Edition"
             DecimalPlaces = 0 : 2;
             BlankZero = true;
             Editable = false;
-            CalcFormula = sum("Course Ledger Entry".Quantity where("Course No." = field("Course No."), "Course Edition" = field(Edition)));
+            CalcFormula = sum("Course Ledger Entry".Quantity where(
+                                                                "Course No." = field("Course No."),
+                                                                "Course Edition" = field(Edition),
+                                                                "Posting Date" = field("Date Filter")
+                                                                  )
+                             );
+        }
+        field(6; "Date Filter"; Date)
+        {
+            Caption = 'Date Filter', comment = 'ESP="Filtro fecha"';
+            FieldClass = FlowFilter;
         }
     }
 
