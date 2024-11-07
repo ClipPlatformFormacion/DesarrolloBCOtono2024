@@ -7,6 +7,8 @@ tableextension 50106 Customer extends Customer
             DataClassification = CustomerContent;
 
             trigger OnValidate()
+            var
+                Handled: Boolean;
             begin
                 case Rec."Customer Level" of
                     Rec."Customer Level"::" ":
@@ -15,8 +17,11 @@ tableextension 50106 Customer extends Customer
                         Rec.Validate(Discount, 5);
                     Rec."Customer Level"::Silver:
                         Rec.Validate(Discount, 10);
-                    else
-                        Error('Customer Level %1 unknown', Rec."Customer Level");
+                    else begin
+                        OnValidateCustomerLevelOnBeforeUnknownCustomerLevelError(Rec, Handled);
+                        if not Handled then
+                            Error('Customer Level %1 unknown', Rec."Customer Level");
+                    end;
                 end;
             end;
         }
@@ -25,4 +30,9 @@ tableextension 50106 Customer extends Customer
             DataClassification = CustomerContent;
         }
     }
+
+    [IntegrationEvent(false, false)]
+    local procedure OnValidateCustomerLevelOnBeforeUnknownCustomerLevelError(var Rec: Record Customer; var Handled: Boolean)
+    begin
+    end;
 }
