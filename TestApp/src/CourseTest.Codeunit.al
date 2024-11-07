@@ -186,11 +186,8 @@ codeunit 50152 "Course Test"
         CourseEdition: Record "Course Edition";
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
-        CourseLedgerEntry: Record "Course Ledger Entry";
         LibrarySales: Codeunit "Library - Sales";
-        LibraryAssert: Codeunit "Library Assert";
         LibraryCourse: Codeunit "Library - Course";
-        DocumentNo: Code[20];
     begin
         // [Scenario] Cuando con las ventas previas más el documento actual se supera el máximo de alumnos para una edición, tiene que salir una notificación
 
@@ -207,7 +204,7 @@ codeunit 50152 "Course Test"
         SalesLine.Validate("Course Edition", CourseEdition.Edition);
         SalesLine.Validate(Quantity, 10);
         SalesLine.Modify(true);
-        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, true);
+        LibrarySales.PostSalesDocument(SalesHeader, true, true);
 
         LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::Order, '');
         LibrarySales.CreateSalesLineSimple(SalesLine, SalesHeader);
@@ -216,7 +213,7 @@ codeunit 50152 "Course Test"
         SalesLine.Validate("Course Edition", CourseEdition.Edition);
         SalesLine.Validate(Quantity, 4);
         SalesLine.Modify(true);
-        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, true);
+        LibrarySales.PostSalesDocument(SalesHeader, true, true);
 
         LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::"Return Order", '');
         LibrarySales.CreateSalesLineSimple(SalesLine, SalesHeader);
@@ -225,7 +222,7 @@ codeunit 50152 "Course Test"
         SalesLine.Validate("Course Edition", CourseEdition.Edition);
         SalesLine.Validate(Quantity, 2);
         SalesLine.Modify(true);
-        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, true);
+        LibrarySales.PostSalesDocument(SalesHeader, true, true);
 
         //          Un nuevo documento de venta
         LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::Order, '');
@@ -243,7 +240,7 @@ codeunit 50152 "Course Test"
     [MessageHandler]
     procedure MaxStudentsExceededMessage(Message: Text[1024])
     var
-        LibraryAssert: Codeunit "Library Assert";
+    // LibraryAssert: Codeunit "Library Assert";
     begin
         // Message.Substring()
         // LibraryAssert.
