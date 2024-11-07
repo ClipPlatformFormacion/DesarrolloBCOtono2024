@@ -68,8 +68,10 @@ page 50101 "Course Card"
                     Image = ResourceLedger;
                     RunObject = Page "Course Ledger Entries";
                     RunPageLink = "Course No." = field("No.");
+#pragma warning disable AL0254                    
                     RunPageView = sorting("Course No.")
                                   order(descending);
+#pragma warning restore                            
                     ShortCutKey = 'Ctrl+F7';
                     ToolTip = 'View the history of transactions that have been posted for the selected record.';
                 }

@@ -1,8 +1,8 @@
 table 50103 "Course Ledger Entry"
 {
     Caption = 'Course Ledger Entry', Comment = 'ESP="Mov. curso"';
-    // DrillDownPageID = "Resource Ledger Entries";
-    // LookupPageID = "Resource Ledger Entries";
+    DrillDownPageID = "Course Ledger Entries";
+    LookupPageID = "Course Ledger Entries";
     DataClassification = CustomerContent;
 
     fields
@@ -159,6 +159,10 @@ table 50103 "Course Ledger Entry"
         {
             Clustered = true;
         }
+        // key(SK1; "Course No.", "Course Edition", "Posting Date")
+        // {
+        //     SumIndexFields = Quantity;
+        // }
     }
 
     fieldgroups

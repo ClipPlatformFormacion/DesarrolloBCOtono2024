@@ -41,6 +41,37 @@ codeunit 50100 "Course Sales Management"
         Result := true;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnAfterValidateEvent, Quantity, false, false)]
+    local procedure SalesLine_OnAfterValidateEvent_Quantity(var Rec: Record "Sales Line")
+    begin
+        CheckSalesForCourseEdition(Rec);
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnAfterValidateEvent, "Course Edition", false, false)]
+    local procedure SalesLine_OnAfterValidateEvent_CourseEdition(var Rec: Record "Sales Line")
+    begin
+        CheckSalesForCourseEdition(Rec);
+    end;
+
+    local procedure CheckSalesForCourseEdition(var SalesLine: Record "Sales Line")
+    var
+        CourseEdition: Record "Course Edition";
+        // MaxStudentsEceeded: TextConst ESP = 'Con la venta actual (%2) más las ventas previas (%3) se superará el número máximo de alumnos permitos (%1) para este curso', ENU = 'With the current sale (%2) plus the previous sales (%3) the maximum number of students allowed (%1) for this course will be exceeded';
+        MaxStudentsEceededMsg: Label 'With the current sale (%2) plus the previous sales (%3) the maximum number of students allowed (%1) for this course will be exceeded', Comment = 'ESP="Con la venta actual (%2) más las ventas previas (%3) se superará el número máximo de alumnos permitos (%1) para este curso"';
+    begin
+        if SalesLine.Type <> SalesLine.Type::Course then
+            exit;
+        if (SalesLine.Quantity = 0) or (SalesLine."Course Edition" = '') then
+            exit;
+
+        CourseEdition.SetLoadFields("Max. Students", "Sales (Qty.)");
+        CourseEdition.Get(SalesLine."No.", SalesLine."Course Edition");
+        CourseEdition.CalcFields("Sales (Qty.)");
+
+        if (CourseEdition."Sales (Qty.)" + SalesLine.Quantity) > CourseEdition."Max. Students" then
+            Message(MaxStudentsEceededMsg, CourseEdition."Max. Students", SalesLine.Quantity, CourseEdition."Sales (Qty.)");
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnPostSalesLineOnBeforePostSalesLine, '', false, false)]
     local procedure "Sales-Post_OnPostSalesLineOnBeforePostSalesLine"(SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; GenJnlLineDocNo: Code[20]; GenJnlLineExtDocNo: Code[35]; GenJnlLineDocType: Enum "Gen. Journal Document Type"; SrcCode: Code[10]; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; var IsHandled: Boolean; SalesLineACY: Record "Sales Line")
     begin
