@@ -56,7 +56,6 @@ codeunit 50100 "Course Sales Management"
     local procedure CheckSalesForCourseEdition(var SalesLine: Record "Sales Line")
     var
         CourseEdition: Record "Course Edition";
-        CourseLedgerEntry: Record "Course Ledger Entry";
         // MaxStudentsEceeded: TextConst ESP = 'Con la venta actual (%2) más las ventas previas (%3) se superará el número máximo de alumnos permitos (%1) para este curso', ENU = 'With the current sale (%2) plus the previous sales (%3) the maximum number of students allowed (%1) for this course will be exceeded';
         MaxStudentsEceededMsg: Label 'With the current sale (%2) plus the previous sales (%3) the maximum number of students allowed (%1) for this course will be exceeded', Comment = 'ESP="Con la venta actual (%2) más las ventas previas (%3) se superará el número máximo de alumnos permitos (%1) para este curso"';
     begin
@@ -65,15 +64,12 @@ codeunit 50100 "Course Sales Management"
         if (SalesLine.Quantity = 0) or (SalesLine."Course Edition" = '') then
             exit;
 
-        CourseEdition.SetLoadFields("Max. Students");
+        CourseEdition.SetLoadFields("Max. Students", "Sales (Qty.)");
         CourseEdition.Get(SalesLine."No.", SalesLine."Course Edition");
+        CourseEdition.CalcFields("Sales (Qty.)");
 
-        CourseLedgerEntry.SetRange("Course No.", SalesLine."No.");
-        CourseLedgerEntry.SetRange("Course Edition", SalesLine."Course Edition");
-        CourseLedgerEntry.CalcSums(Quantity);
-
-        if (CourseLedgerEntry.Quantity + SalesLine.Quantity) > CourseEdition."Max. Students" then
-            Message(MaxStudentsEceededMsg, CourseEdition."Max. Students", SalesLine.Quantity, CourseLedgerEntry.Quantity);
+        if (CourseEdition."Sales (Qty.)" + SalesLine.Quantity) > CourseEdition."Max. Students" then
+            Message(MaxStudentsEceededMsg, CourseEdition."Max. Students", SalesLine.Quantity, CourseEdition."Sales (Qty.)");
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnPostSalesLineOnBeforePostSalesLine, '', false, false)]
