@@ -58,6 +58,8 @@ codeunit 50100 "Course Sales Management"
         CourseEdition: Record "Course Edition";
         CourseLedgerEntry: Record "Course Ledger Entry";
         PreviousSales: Decimal;
+        // MaxStudentsEceeded: TextConst ESP = 'Con la venta actual (%2) más las ventas previas (%3) se superará el número máximo de alumnos permitos (%1) para este curso', ENU = 'With the current sale (%2) plus the previous sales (%3) the maximum number of students allowed (%1) for this course will be exceeded';
+        MaxStudentsEceededMsg: Label 'With the current sale (%2) plus the previous sales (%3) the maximum number of students allowed (%1) for this course will be exceeded', Comment = 'ESP="Con la venta actual (%2) más las ventas previas (%3) se superará el número máximo de alumnos permitos (%1) para este curso"';
     begin
         if SalesLine.Type <> SalesLine.Type::Course then
             exit;
@@ -76,7 +78,7 @@ codeunit 50100 "Course Sales Management"
             until CourseLedgerEntry.Next() = 0;
 
         if (PreviousSales + SalesLine.Quantity) > CourseEdition."Max. Students" then
-            Message('Con la venta actual se superará el número máximo de alumnos permitos para este curso');
+            Message(MaxStudentsEceededMsg, CourseEdition."Max. Students", SalesLine.Quantity, PreviousSales);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnPostSalesLineOnBeforePostSalesLine, '', false, false)]

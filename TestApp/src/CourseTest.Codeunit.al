@@ -179,6 +179,7 @@ codeunit 50152 "Course Test"
     end;
 
     [Test]
+    [HandlerFunctions('MaxStudentsExceededMessage')]
     procedure NotificationWhenExceedingMaxStudents()
     var
         Course: Record Course;
@@ -206,7 +207,7 @@ codeunit 50152 "Course Test"
         SalesLine.Validate("Course Edition", CourseEdition.Edition);
         SalesLine.Validate(Quantity, 10);
         SalesLine.Modify(true);
-        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, false);
+        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, true);
 
         LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::Order, '');
         LibrarySales.CreateSalesLineSimple(SalesLine, SalesHeader);
@@ -215,7 +216,7 @@ codeunit 50152 "Course Test"
         SalesLine.Validate("Course Edition", CourseEdition.Edition);
         SalesLine.Validate(Quantity, 4);
         SalesLine.Modify(true);
-        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, false);
+        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, true);
 
         LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::"Return Order", '');
         LibrarySales.CreateSalesLineSimple(SalesLine, SalesHeader);
@@ -224,7 +225,7 @@ codeunit 50152 "Course Test"
         SalesLine.Validate("Course Edition", CourseEdition.Edition);
         SalesLine.Validate(Quantity, 2);
         SalesLine.Modify(true);
-        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, false);
+        DocumentNo := LibrarySales.PostSalesDocument(SalesHeader, true, true);
 
         //          Un nuevo documento de venta
         LibrarySales.CreateSalesHeader(SalesHeader, "Sales Document Type"::Order, '');
@@ -237,6 +238,15 @@ codeunit 50152 "Course Test"
         SalesLine.Validate(Quantity, 4);
 
         // [Then] Tiene que salir una notificación
+    end;
+
+    [MessageHandler]
+    procedure MaxStudentsExceededMessage(Message: Text[1024])
+    var
+        LibraryAssert: Codeunit "Library Assert";
+    begin
+        // Message.Substring()
+        // LibraryAssert.
     end;
 }
 #pragma warning restore
