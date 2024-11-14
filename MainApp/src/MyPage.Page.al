@@ -24,6 +24,11 @@ page 50107 "My Page"
                 RunObject = xmlport "Sales Order Export - TextoFijo";
                 Image = Export;
             }
+            action(ExecuteQuery)
+            {
+                RunObject = query "Simple Item Query";
+                Image = NextRecord;
+            }
         }
     }
 }
