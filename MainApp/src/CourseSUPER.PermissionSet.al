@@ -19,5 +19,11 @@ permissionset 50100 "Course - SUPER"
         table "Course Journal Line" = X,
         tabledata "Course Journal Line" = RMID,
         codeunit "Course Journal-Post Line" = X,
-        page "Course Ledger Entries" = X;
+        page "Course Ledger Entries" = X,
+        table "Update Price Log" = X,
+        tabledata "Update Price Log" = RMID,
+        codeunit "Blank Customer Level" = X,
+        codeunit "Bronze Customer Level" = X,
+        codeunit "Silver customer Level" = X,
+        report "Update Course Price" = X;
 }
