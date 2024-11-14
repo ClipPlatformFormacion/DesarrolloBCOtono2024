@@ -14,6 +14,16 @@ page 50107 "My Page"
                 RunObject = xmlport "Sales Order Export";
                 Image = Export;
             }
+            action(ExecuteXMLcsv)
+            {
+                RunObject = xmlport "Sales Order Export - csv";
+                Image = Export;
+            }
+            action(ExecuteXMLTextoFijo)
+            {
+                RunObject = xmlport "Sales Order Export - TextoFijo";
+                Image = Export;
+            }
         }
     }
 }
