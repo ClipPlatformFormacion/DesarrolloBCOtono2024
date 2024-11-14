@@ -32,6 +32,17 @@ page 50100 "Course List"
     }
     actions
     {
+        area(Creation)
+        {
+            action(ImportCourses)
+            {
+                ApplicationArea = All;
+                Caption = 'Import Courses';
+                Image = Import;
+                RunObject = XmlPort "Import Courses";
+                ToolTip = 'Import courses from an XML file.';
+            }
+        }
         area(Navigation)
         {
             action(Editions)
