@@ -29,6 +29,15 @@ page 50107 "My Page"
                 RunObject = query "Simple Item Query";
                 Image = NextRecord;
             }
+            action(CrearCliente)
+            {
+                trigger OnAction()
+                var
+                    WebServices: Codeunit WebServices;
+                begin
+                    Message('Se ha creado el cliente : %1', WebServices.CrearCliente());
+                end;
+            }
         }
     }
 }

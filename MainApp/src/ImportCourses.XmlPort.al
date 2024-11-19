@@ -1,6 +1,7 @@
 xmlport 50103 "Import Courses"
 {
     Direction = Import;
+    UseDefaultNamespace = true;
 
     schema
     {
