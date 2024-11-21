@@ -124,5 +124,21 @@ codeunit 50101 "Course Journal-Post Line"
     local procedure OnCodeOnAfterRunCheck(var CourseJournalLine: Record "Course Journal Line")
     begin
     end;
+
+
+    local procedure MyProcedure()
+    var
+        Course: Record Course;
+    begin
+        Course.Get('UNCURSO');
+        Course.Name := 'Un curso';
+        Course.Modify();
+        Course.UnProcedimiento();
+    end;
+
+    procedure UnProcedimiento()
+    begin
+
+    end;
 }
 

@@ -9,5 +9,7 @@
 			"path": "TestApp"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"al.showHomeAtStartup": "Always"
+	}
 }

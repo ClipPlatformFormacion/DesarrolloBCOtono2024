@@ -111,10 +111,10 @@ table 50100 Course
         if IsHandled then
             exit;
 
-        if "No." = '' then begin
+        if Rec."No." = '' then begin
             ResSetup.Get();
             ResSetup.TestField("Course Nos.");
-            "No. Series" := ResSetup."Course Nos.";
+            Rec."No. Series" := ResSetup."Course Nos.";
             if NoSeries.AreRelated("No. Series", xRec."No. Series") then
                 "No. Series" := xRec."No. Series";
             "No." := NoSeries.GetNextNo("No. Series");
@@ -157,6 +157,13 @@ table 50100 Course
     [IntegrationEvent(false, false)]
     local procedure OnBeforeAssistEdit(var Course: Record Course; xOldRes: Record Course; var IsHandled: Boolean; var Result: Boolean)
     begin
+    end;
+
+    procedure UnProcedimiento()
+    var
+        myInt: Integer;
+    begin
+
     end;
 
     var

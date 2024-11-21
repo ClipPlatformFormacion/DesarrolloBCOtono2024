@@ -11,5 +11,5 @@
         "${PerTenantExtensionCop}",
         "${AppSourceCop}"
     ],
-    "al.ruleSetPath": "./.vscode/MisNormas.ruleset.json",
+    "al.ruleSetPath": "./.vscode/MisNormas.ruleset.json"
 }
