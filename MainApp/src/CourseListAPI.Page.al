@@ -2,6 +2,7 @@ page 50108 "CourseListAPI"
 {
     PageType = API;
     Caption = 'CourseListAPI', Locked = true;
+    ODataKeyFields = SystemId;
     APIPublisher = 'clipplatform';
     APIGroup = 'communication';
     APIVersion = 'v1.0';
@@ -19,6 +20,7 @@ page 50108 "CourseListAPI"
         {
             repeater(RepeaterControl)
             {
+                field(systemId; Rec.SystemId) { }
                 field(no; Rec."No.") { NotBlank = true; }
                 field(name; Rec.Name) { NotBlank = true; }
                 field(contentDescription; Rec."Content Description") { Editable = false; }

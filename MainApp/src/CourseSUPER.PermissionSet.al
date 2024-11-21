@@ -25,5 +25,15 @@ permissionset 50100 "Course - SUPER"
         codeunit "Blank Customer Level" = X,
         codeunit "Bronze Customer Level" = X,
         codeunit "Silver customer Level" = X,
-        report "Update Course Price" = X;
+        report "Update Course Price" = X,
+        codeunit WebServices = X,
+        page CourseListAPI = X,
+        page "My Page" = X,
+        page "Update Price Log" = X,
+        query "Simple Item Query" = X,
+        report "Course List" = X,
+        xmlport "Import Courses" = X,
+        xmlport "Sales Order Export" = X,
+        xmlport "Sales Order Export - csv" = X,
+        xmlport "Sales Order Export - TextoFijo" = X;
 }
